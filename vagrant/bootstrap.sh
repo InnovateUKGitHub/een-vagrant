@@ -62,4 +62,11 @@ cp /vagrant/vagrant/files/bashrc /home/vagrant/.bashrc && chown vagrant:vagrant 
 sudo composer self-update 2>&1 > /dev/null && \
   echo " - Updated composer"
 
+# Nodejs, npm and grunt and all required binaries to use grunt and sass
+sudo apt-get install nodejs -y
+sudo apt-get install npm -y
+
+sudo npm install -g grunt-cli
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo apt-get install ruby-sass -y
 echo "Bootstrap complete!"
