@@ -14,7 +14,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # static ip for local development
       lamp.vm.network "private_network", ip: "192.168.10.10"
 
-      lamp.vm.synced_folder SHARED_FOLDER, '/var/www/een', type: "nfs"
+      lamp.vm.synced_folder SHARED_FOLDER, '/var/www/een',
+        :nfs => true,
+        :mount_option => ["actimeo=1"]
+
+      # This uses uid and gid of the user that started vagrant.
+      config.nfs.map_uid = Process.uid
+      config.nfs.map_gid = Process.gid
+
+      # Bindfs support to fix shared folder (NFS) permission issue on Mac
+      if Vagrant.has_plugin?("vagrant-bindfs")
+        config.bindfs.bind_folder "/var/www/een", "/var/www/een",
+          perms: "u=rwx:g=rwx:o=rwx"
+      end
 
       lamp.vm.provider "virtualbox" do |v|
         v.name = "een-dev"

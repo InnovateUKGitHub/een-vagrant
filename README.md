@@ -6,6 +6,11 @@ First you need to import to your environment the location of your een project
 export shared_folder=PATH_TO_YOUR_PROJECT
 ```
 
+If you are on a mac you need to install a vagrant plugin to fix nfs permissions
+```
+vagrant plugin install vagrant-bindfs
+```
+
 It is best to add it globaly to your environment by adding the previous line to your .bashrc or .bash_profile
 use `source ~/.bachrc` to reload your file to your current bash session
 
