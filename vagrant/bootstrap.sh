@@ -6,7 +6,7 @@
 #                                                                              #
 ################################################################################
 
-# Update all system and install yum
+# Update all system
 sudo apt-get -qq update > /dev/null 2>&1
 
 # Install required software
@@ -37,11 +37,15 @@ cp /vagrant/vagrant/files/lamp.hosts /etc/hosts && \
   echo " - Copied contents for hosts file"
 
 # PHP.ini
-#cp /vagrant/vagrant/files/php.ini /etc/php5/cli/php.ini && \
-#  echo "     Copied php.ini file"
+cp /vagrant/vagrant/files/php.ini /etc/php5/cli/php.ini && \
+ echo " - Copied php.ini file"
+
+# my.cnf
+cp /vagrant/vagrant/files/my.cnf /etc/mysql/my.cnf && \
+  echo " - Copied my.cnf file"
 
 # VirtualHost apache files
-cp "/vagrant/vagrant/files/een.conf" /etc/apache2/sites-available/ && \
+cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
   echo " - Copied een apache config"
 
 # Create cache dir for app
