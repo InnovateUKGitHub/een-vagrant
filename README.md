@@ -3,7 +3,8 @@
 
 First you need to import to your environment the location of your een project
 ```
-export shared_folder=PATH_TO_YOUR_PROJECT
+export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_DRUPAL_PROJECT
+export EEN_API_SHARED_FOLDER_HOST=PATH_TO_YOUR_API_PROJECT
 ```
 
 If you are on a mac you need to install a vagrant plugin to fix nfs permissions
@@ -19,16 +20,19 @@ Once your environment correct (you can verify by using echo $shared_folder), you
 This will provision the box with all the necessary installation.
 The box should be provide with:
 - shared folder (nfs)
-- apache2
+- apache 2.4.7
 - mysql 5.5.44
 - php 5.5.9
 - composer
 - elasticsearch 2.3.1
 - java 7
+- node 0.10.25
+- npm 1.3.10
+- grunt-cli 1.2.0
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een
+192.168.10.10   een een-api
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:
