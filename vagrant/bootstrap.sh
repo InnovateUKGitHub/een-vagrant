@@ -21,7 +21,7 @@ sudo apt-get -y install apache2 > /dev/null 2>&1 && \
 # Install PHP 5.6
 sudo add-apt-repository ppa:ondrej/php > /dev/null 2>&1
 sudo apt-get -y update > /dev/null 2>&1
-sudo apt-get -y install php5.6 php5.6-mcrypt php5.6-mbstring php5.6-curl php5.6-cli php5.6-mysql php5.6-gd php5.6-intl php5.6-xsl > /dev/null 2>&1 && \
+sudo apt-get -y install php5.6 php5.6-mcrypt php5.6-mbstring php5.6-curl php5.6-cli php5.6-mysql php5.6-gd php5.6-intl php5.6-xsl php5.6-sqlite3 > /dev/null 2>&1 && \
   echo "2 - PHP 5.6 Installed"
 
 # Install Mysql 5.6 / Default password for root: password
@@ -34,6 +34,15 @@ sudo apt-get -y -q install mysql-server-5.6 > /dev/null 2>&1 && \
 # Install JAVA
 sudo apt-get -qq install openjdk-7-jre -y > /dev/null 2>&1 && \
   echo "4 - Java 7 Installed"
+
+# Install Sendmail
+sudo apt-get -y install sendmail > /dev/null 2>&1;
+
+# Install Git
+sudo apt-get -y install git > /dev/null 2>&1;
+
+# Install Unzip
+sudo apt-get install unzip -y > /dev/null 2>&1
 
 # Install Elastic Search
 cd /tmp
@@ -56,34 +65,35 @@ cp /vagrant/vagrant/files/lamp.hosts /etc/hosts && \
 
 # PHP.ini
 cp /vagrant/vagrant/files/php.ini /etc/php/5.6/cli/php.ini && \
- echo " - php.ini Copied"
+  echo "9 - php.ini Copied"
 
 # my.cnf
 cp /vagrant/vagrant/files/my.cnf /etc/mysql/my.cnf && \
-  echo "9 - my.cnf Copied"
+  echo "10- my.cnf Copied"
 
 # VirtualHost apache files
 cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
-cp /vagrant/vagrant/files/een-api.conf /etc/apache2/sites-available/ && \
-  echo "10- Apache Configs Copied"
+cp /vagrant/vagrant/files/een-elasticsearch.conf /etc/apache2/sites-available/ && \
+  echo "11- Apache Configs Copied"
 
 # Create cache dir for app
 mkdir -p /var/lib/een/cache
-mkdir -p /var/lib/een-api/cache
+mkdir -p /var/lib/een-elasticsearch/cache
 
 # Disable default vhost and enable een
 sudo a2dissite 000-default > /dev/null 2>&1 
 sudo a2dissite default-ssl > /dev/null 2>&1 
 sudo a2ensite een > /dev/null 2>&1
-sudo a2ensite een-api > /dev/null 2>&1
+sudo a2ensite een-elasticsearch > /dev/null 2>&1
+sudo a2enmod rewrite > /dev/null 2>&1
 
 # Restart Apache
 service apache2 restart > /dev/null 2>&1 && \
-  echo "11- Apache Configured"
+  echo "12- Apache Configured"
 
 # Copy bashrc
 cp /vagrant/vagrant/files/bashrc /home/vagrant/.bashrc && chown vagrant:vagrant /home/vagrant/.bashrc && \
-  echo "12- .bashrc Copied"
+  echo "13- .bashrc Copied"
 
 # Install Composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" > /dev/null 2>&1 && \
@@ -91,16 +101,16 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d85314
 php composer-setup.php > /dev/null 2>&1 && \
 php -r "unlink('composer-setup.php');" > /dev/null 2>&1 && \
 sudo mv composer.phar /usr/bin/composer && \
-  echo "13- Composer Installed"
+  echo "14- Composer Installed"
 
 # Nodejs, npm and grunt and all required binaries to use grunt and sass
 sudo apt-get -qq install nodejs -y > /dev/null 2>&1 && \
-  echo "14- Node Installed"
+  echo "15- Node Installed"
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo apt-get -qq install npm -y > /dev/null 2>&1 && \
-  echo "15- Npm Installed"
+  echo "16- Npm Installed"
 sudo npm install -g --silent grunt-cli > /dev/null 2>&1 && \
-  echo "16- Grunt Cli Installed"
+  echo "17- Grunt Cli Installed"
 sudo apt-get -qq install ruby-sass -y > /dev/null 2>&1 && \
-  echo "17- Sass Installed"
+  echo "18- Sass Installed"
 echo "Bootstrap complete!"

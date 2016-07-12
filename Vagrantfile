@@ -77,7 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 *                                                                             *
 * Host Access:                                                                *
 *   Please add this line to your hosts to access http://enn/                  *
-*   192.168.10.10 een een-api                                                 *
+*   192.168.10.10 een een-elasticsearch een-api                               *
 *******************************************************************************
 EOF
   end
