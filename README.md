@@ -32,7 +32,7 @@ The box should be provide with:
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een een-api
+192.168.10.10   een een-elasticsearch een-api
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:

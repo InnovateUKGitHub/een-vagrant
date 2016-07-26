@@ -10,4 +10,5 @@ alias ll='ls -alF'
 export PS1='\n\[\e[7;36m\][$(date +%H:%M)] \u@\h \w\[\e[0m\]\n $ '
 
 # EXPORT CACHE
-export EEN_CACHE_DIR='/var/lib/een/cache'
+export EEN_CACHE_DIR='/var/www/een/cache'
+export EEN_ELASTICSEARH_CACHE_DIR='/var/www/een/elasticsearch/cache'
