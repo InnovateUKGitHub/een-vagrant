@@ -4,7 +4,7 @@
 First you need to import to your environment the location of your een project
 ```
 export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_DRUPAL_PROJECT
-export EEN_API_SHARED_FOLDER_HOST=PATH_TO_YOUR_API_PROJECT
+export EEN_ELASTICSEARCH_SHARED_FOLDER_HOST=PATH_TO_YOUR_ELASTICSEARCH_PROJECT
 ```
 
 If you are on a mac you need to install a vagrant plugin to fix nfs permissions
@@ -21,8 +21,8 @@ This will provision the box with all the necessary installation.
 The box should be provide with:
 - shared folder (nfs)
 - apache 2.4.7
-- mysql 5.5.44
-- php 5.5.9
+- mysql 5.6.31
+- php 5.6
 - composer
 - elasticsearch 2.3.1
 - java 7
@@ -32,13 +32,15 @@ The box should be provide with:
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een een-elasticsearch een-api
+192.168.10.10   een een-elasticsearch
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:
 ```
 vagrant ssh
 cd /var/www/een
+make install
+cd /var/www/een-elasticsearch
 make install
 ```
 

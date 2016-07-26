@@ -5,6 +5,11 @@ if ENV.has_key?('EEN_SHARED_FOLDER_HOST') === false
   exit
 end
 
+if ENV.has_key?('EEN_ELASTICSEARCH_SHARED_FOLDER_HOST') === false
+  puts "Please define EEN_ELASTICSEARCH_SHARED_FOLDER_HOST in your Environment"
+  exit
+end
+
 VAGRANTFILE_API_VERSION = "2"
 
 EEN_BOX = 'ubuntu/trusty64'
@@ -17,9 +22,8 @@ EEN_CPUS = 2
 EEN_SHARED_FOLDER_GUEST = '/var/www/een'
 EEN_SHARED_FOLDER_HOST = ENV['EEN_SHARED_FOLDER_HOST']
 
-# When an api will be needed
-#EEN_API_SHARED_FOLDER_GUEST = '/var/www/een-api'
-#EEN_API_SHARED_FOLDER_HOST = ENV['EEN_API_SHARED_FOLDER_HOST']
+EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST = '/var/www/een-elasticsearch'
+EEN_ELASTICSEARCH_SHARED_FOLDER_HOST = ENV['EEN_ELASTICSEARCH_SHARED_FOLDER_HOST']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "lamp", primary: true do |lamp|
@@ -33,9 +37,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :id => 'drupal',
         :nfs => true
 
-      #lamp.vm.synced_folder EEN_API_SHARED_FOLDER_HOST, EEN_API_SHARED_FOLDER_GUEST,
-      #  :id => 'api',
-      #  :nfs => true
+      lamp.vm.synced_folder EEN_ELASTICSEARCH_SHARED_FOLDER_HOST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
+        :id => 'api',
+        :nfs => true
 
       # This uses uid and gid of the user that started vagrant.
       config.nfs.map_uid = Process.uid
@@ -45,8 +49,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if Vagrant.has_plugin?("vagrant-bindfs")
         config.bindfs.bind_folder EEN_SHARED_FOLDER_GUEST, EEN_SHARED_FOLDER_GUEST,
           perms: 'u=rwx:g=rwx:o=rwx'
-        #config.bindfs.bind_folder EEN_API_SHARED_FOLDER_GUEST, EEN_API_SHARED_FOLDER_GUEST,
-        #  perms: 'u=rwx:g=rwx:o=rwx'
+        config.bindfs.bind_folder EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
+          perms: 'u=rwx:g=rwx:o=rwx'
       end
 
       lamp.vm.provider "virtualbox" do |v|
@@ -84,7 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 *                                                                             *
 * Host Access:                                                                *
 *   Please add this line to your hosts to access http://enn/                  *
-*   192.168.10.10 een een-elasticsearch een-api                               *
+*   192.168.10.10 een een-elasticsearch                                       *
 *******************************************************************************
 EOF
   end
