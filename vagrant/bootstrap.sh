@@ -109,8 +109,8 @@ sudo apt-get -qq install nodejs -y > /dev/null 2>&1 && \
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo apt-get -qq install npm -y > /dev/null 2>&1 && \
   echo "16- Npm Installed"
-sudo npm install -g --silent grunt-cli > /dev/null 2>&1 && \
-  echo "17- Grunt Cli Installed"
+sudo npm install -g --silent gulp-cli > /dev/null 2>&1 && \
+  echo "17- Gulp Cli Installed"
 sudo apt-get -qq install ruby-sass -y > /dev/null 2>&1 && \
   echo "18- Sass Installed"
 echo "Bootstrap complete!"
