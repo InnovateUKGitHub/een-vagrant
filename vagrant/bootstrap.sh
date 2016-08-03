@@ -44,6 +44,9 @@ sudo apt-get -y install git > /dev/null 2>&1;
 # Install Unzip
 sudo apt-get install unzip -y > /dev/null 2>&1
 
+# Install Ant
+sudo apt-get install ant -y > /dev/null 2>&1
+
 # Install Elastic Search
 cd /tmp
 wget --quiet https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.1/elasticsearch-2.3.1.deb > /dev/null 2>&1
@@ -72,28 +75,49 @@ cp /vagrant/vagrant/files/my.cnf /etc/mysql/my.cnf && \
   echo "10- my.cnf Copied"
 
 # VirtualHost apache files
-cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
-cp /vagrant/vagrant/files/een-elasticsearch.conf /etc/apache2/sites-available/ && \
-  echo "11- Apache Configs Copied"
+# cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
+# cp /vagrant/vagrant/files/een-elasticsearch.conf /etc/apache2/sites-available/ && \
+#   echo "11- Apache Configs Copied"
+
+# Create folder and symlinks for virtualhost
+sudo mkdir /home/web
+sudo chown vagrant:vagrant /home/web
+ln -s /var/www/een /home/web
+ln -s /var/www/een-elasticsearch /home/web
 
 # Create cache dir for app
-mkdir -p /var/lib/een/cache
-mkdir -p /var/lib/een-elasticsearch/cache
+#mkdir -p /var/lib/een/cache
+#mkdir -p /var/lib/een-elasticsearch/cache
 
-# Disable default vhost and enable een
-sudo a2dissite 000-default > /dev/null 2>&1 
-sudo a2dissite default-ssl > /dev/null 2>&1 
-sudo a2ensite een > /dev/null 2>&1
-sudo a2ensite een-elasticsearch > /dev/null 2>&1
+# Disable default vhost
+ sudo a2dissite 000-default > /dev/null 2>&1
+ sudo a2dissite default-ssl > /dev/null 2>&1
+# sudo a2ensite een > /dev/null 2>&1
+# sudo a2ensite een-elasticsearch > /dev/null 2>&1
 sudo a2enmod rewrite > /dev/null 2>&1
+
+# Add ServerName to apache conf
+echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
+sudo a2enconf fqdn > /dev/null 2>&1
 
 # Restart Apache
 service apache2 restart > /dev/null 2>&1 && \
   echo "12- Apache Configured"
 
-# Copy bashrc
-cp /vagrant/vagrant/files/bashrc /home/vagrant/.bashrc && chown vagrant:vagrant /home/vagrant/.bashrc && \
-  echo "13- .bashrc Copied"
+# Copy bash_profile
+cp /vagrant/vagrant/files/bash_profile /home/vagrant/.bash_profile && chown vagrant:vagrant /home/vagrant/.bash_profile && \
+echo "
+if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+fi" >> /home/vagrant/.bashrc && \
+  echo "13- .bash_profile vagrant Copied"
+
+sudo cp /vagrant/vagrant/files/bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile && \
+sudo echo "
+if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+fi" >> /root/.bashrc && \
+  echo "13- .bash_profile root Copied"
 
 # Install Composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" > /dev/null 2>&1 && \

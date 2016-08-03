@@ -64,32 +64,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       lamp.vm.provision :shell, :path => "./vagrant/bootstrap.sh"
 
       lamp.vm.post_up_message = <<EOF
-*******************************************************************************
-*                                                                             *
-*                          EEN-LAMP virtual machine                           *
-*                                                                             *
-* This VM will bring up:                                                      *
-*   - The Een Environment                                                     *
-*   - Elastic Search                                                          *
-*                                                                             *
-* Commands:                                                                   *
-*   # service apache2 status # displays the status of Apache                  *
-*   # service mysql status # displays the status of MySQL                     *
-*   # service elasticsearch status # display the status of Elasticsearch      *
-*                                                                             *
-* Configuration:                                                              *
-*   MySQL root password - "password"                                          *
-*                                                                             *
-* Misc:                                                                       *
-*   http://een/_plugin/head/ - Elasticsearch head                             *
-*                                                                             *
-* SSH:                                                                        *
-*   vagrant ssh or vagrant ssh lamp                                           *
-*                                                                             *
-* Host Access:                                                                *
-*   Please add this line to your hosts to access http://enn/                  *
-*   192.168.10.10 een een-elasticsearch                                       *
-*******************************************************************************
+*******************************************************************************************
+*                                                                                         *
+*                          EEN-LAMP virtual machine                                       *
+*                                                                                         *
+* This VM will bring up:                                                                  *
+*   - The Een Environment                                                                 *
+*   - Elastic Search                                                                      *
+*                                                                                         *
+* Commands:                                                                               *
+*   # service apache2 status # displays the status of Apache                              *
+*   # service mysql status # displays the status of MySQL                                 *
+*   # service elasticsearch status # display the status of Elasticsearch                  *
+*                                                                                         *
+* Configuration:                                                                          *
+*   MySQL root password - "password"                                                      *
+*                                                                                         *
+* Misc:                                                                                   *
+*   http://een:9200/_plugin/head/ - Elasticsearch head                                    *
+*                                                                                         *
+* SSH:                                                                                    *
+*   vagrant ssh or vagrant ssh lamp                                                       *
+*                                                                                         *
+* Host Access:                                                                            *
+*   Please add this line to your hosts to access http://enn/                              *
+*   192.168.10.10 een een-elasticsearch vagrant.een.co.uk vagrant.een-elasticsearch.co.uk *
+*******************************************************************************************
 EOF
   end
 

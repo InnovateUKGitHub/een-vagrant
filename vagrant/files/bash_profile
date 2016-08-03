@@ -1,0 +1,8 @@
+# .bash_profile
+
+# User specific aliases and functions
+alias ll='ls -alF'
+export PS1='\n\[\e[7;36m\][$(date +%H:%M)] \u@\h \w\[\e[0m\]\n $ '
+
+# EXPORT CACHE
+export APPLICATION_ENV='development_vagrant'
