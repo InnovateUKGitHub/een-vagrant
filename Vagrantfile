@@ -48,9 +48,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Bindfs support to fix shared folder (NFS) permission issue on Mac
       if Vagrant.has_plugin?("vagrant-bindfs")
         config.bindfs.bind_folder EEN_SHARED_FOLDER_GUEST, EEN_SHARED_FOLDER_GUEST,
-          perms: 'u=rwx:g=rwx:o=rwx'
+          perms: 'u=rwx:g=rwx:o=rwx',
+          owner: 'vagrant',
+          group: 'vagrant'
         config.bindfs.bind_folder EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
-          perms: 'u=rwx:g=rwx:o=rwx'
+          perms: 'u=rwx:g=rwx:o=rwx',
+          owner: 'vagrant',
+          group: 'vagrant'
       end
 
       lamp.vm.provider "virtualbox" do |v|
@@ -64,32 +68,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       lamp.vm.provision :shell, :path => "./vagrant/bootstrap.sh"
 
       lamp.vm.post_up_message = <<EOF
-*******************************************************************************
-*                                                                             *
-*                          EEN-LAMP virtual machine                           *
-*                                                                             *
-* This VM will bring up:                                                      *
-*   - The Een Environment                                                     *
-*   - Elastic Search                                                          *
-*                                                                             *
-* Commands:                                                                   *
-*   # service apache2 status # displays the status of Apache                  *
-*   # service mysql status # displays the status of MySQL                     *
-*   # service elasticsearch status # display the status of Elasticsearch      *
-*                                                                             *
-* Configuration:                                                              *
-*   MySQL root password - "password"                                          *
-*                                                                             *
-* Misc:                                                                       *
-*   http://een/_plugin/head/ - Elasticsearch head                             *
-*                                                                             *
-* SSH:                                                                        *
-*   vagrant ssh or vagrant ssh lamp                                           *
-*                                                                             *
-* Host Access:                                                                *
-*   Please add this line to your hosts to access http://enn/                  *
-*   192.168.10.10 een een-elasticsearch                                       *
-*******************************************************************************
+*******************************************************************************************
+*                                                                                         *
+*                          EEN-LAMP virtual machine                                       *
+*                                                                                         *
+* This VM will bring up:                                                                  *
+*   - The Een Environment                                                                 *
+*   - Elastic Search                                                                      *
+*                                                                                         *
+* Commands:                                                                               *
+*   # service apache2 status # displays the status of Apache                              *
+*   # service mysql status # displays the status of MySQL                                 *
+*   # service elasticsearch status # display the status of Elasticsearch                  *
+*                                                                                         *
+* Configuration:                                                                          *
+*   MySQL root password - "password"                                                      *
+*                                                                                         *
+* Misc:                                                                                   *
+*   http://een:9200/_plugin/head/ - Elasticsearch head                                    *
+*                                                                                         *
+* SSH:                                                                                    *
+*   vagrant ssh or vagrant ssh lamp                                                       *
+*                                                                                         *
+* Host Access:                                                                            *
+*   Please add this line to your hosts to access http://enn/                              *
+*   192.168.10.10 een een-elasticsearch vagrant.een.co.uk vagrant.een-elasticsearch.co.uk *
+*******************************************************************************************
 EOF
   end
 
