@@ -1,6 +1,16 @@
 
 #Deploy instance of vagrant locally
 
+#Install Vagrant project locally
+```
+git clone https://YOUR_USERNAME@devops.innovateuk.org/code-repository/scm/een/een-vagrant.git
+git checkout master
+git checkout develop
+```
+
+Then log into your vagrant box `vagrant ssh` and run `make install` where the project is.
+
+
 First you need to import to your environment the location of your een project
 ```
 export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_DRUPAL_PROJECT
@@ -21,28 +31,28 @@ This will provision the box with all the necessary installation.
 The box should be provide with:
 - shared folder (nfs)
 - apache 2.4.7
-- mysql 5.6.31
+- mysql 5.6
 - php 5.6
 - composer
 - elasticsearch 2.3.1
 - java 7
 - node 0.10.25
 - npm 1.3.10
-- grunt-cli 1.2.0
+- gulp-cli 1.2.2
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een een-elasticsearch
+192.168.10.10   een een-elasticsearch vagrant.een.co.uk vagrant.een-elasticsearch.co.uk
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:
 ```
 vagrant ssh
 cd /var/www/een
-make install
+make
 cd /var/www/een-elasticsearch
 make install
 ```
 
 Once the installation is complete you can go to this address on your navigator:
-http://een/
+http://vagrant.een.co.uk/
