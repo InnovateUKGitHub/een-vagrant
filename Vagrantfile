@@ -48,9 +48,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Bindfs support to fix shared folder (NFS) permission issue on Mac
       if Vagrant.has_plugin?("vagrant-bindfs")
         config.bindfs.bind_folder EEN_SHARED_FOLDER_GUEST, EEN_SHARED_FOLDER_GUEST,
-          perms: 'u=rwx:g=rwx:o=rwx'
+          perms: 'u=rwx:g=rwx:o=rwx',
+          owner: 'vagrant',
+          group: 'vagrant'
         config.bindfs.bind_folder EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
-          perms: 'u=rwx:g=rwx:o=rwx'
+          perms: 'u=rwx:g=rwx:o=rwx',
+          owner: 'vagrant',
+          group: 'vagrant'
       end
 
       lamp.vm.provider "virtualbox" do |v|
