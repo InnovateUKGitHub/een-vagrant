@@ -14,7 +14,7 @@ Then log into your vagrant box `vagrant ssh` and run `make install` where the pr
 First you need to import to your environment the location of your een project
 ```
 export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_DRUPAL_PROJECT
-export EEN_ELASTICSEARCH_SHARED_FOLDER_HOST=PATH_TO_YOUR_ELASTICSEARCH_PROJECT
+export EEN_SERVICE_SHARED_FOLDER_HOST=PATH_TO_YOUR_SERVICE []() _PROJECT
 ```
 
 If you are on a mac you need to install a vagrant plugin to fix nfs permissions
@@ -42,15 +42,15 @@ The box should be provide with:
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een een-elasticsearch vagrant.een.co.uk vagrant.een-elasticsearch.co.uk
+192.168.10.10   een een-service vagrant.een.co.uk vagrant.een-service.co.uk
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:
 ```
 vagrant ssh
 cd /var/www/een
-make
-cd /var/www/een-elasticsearch
+make install
+cd /var/www/een-service
 make install
 ```
 
