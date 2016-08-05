@@ -76,24 +76,24 @@ cp /vagrant/vagrant/files/my.cnf /etc/mysql/my.cnf && \
 
 # VirtualHost apache files
 # cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
-# cp /vagrant/vagrant/files/een-elasticsearch.conf /etc/apache2/sites-available/ && \
+# cp /vagrant/vagrant/files/een-service.conf /etc/apache2/sites-available/ && \
 #   echo "11- Apache Configs Copied"
 
 # Create folder and symlinks for virtualhost
 sudo mkdir /home/web
 sudo chown vagrant:vagrant /home/web
 ln -s /var/www/een /home/web
-ln -s /var/www/een-elasticsearch /home/web
+ln -s /var/www/een-service /home/web
 
 # Create cache dir for app
 #mkdir -p /var/lib/een/cache
-#mkdir -p /var/lib/een-elasticsearch/cache
+#mkdir -p /var/lib/een-service/cache
 
 # Disable default vhost
  sudo a2dissite 000-default > /dev/null 2>&1
  sudo a2dissite default-ssl > /dev/null 2>&1
 # sudo a2ensite een > /dev/null 2>&1
-# sudo a2ensite een-elasticsearch > /dev/null 2>&1
+# sudo a2ensite een-service > /dev/null 2>&1
 sudo a2enmod rewrite > /dev/null 2>&1
 
 # Add ServerName to apache conf

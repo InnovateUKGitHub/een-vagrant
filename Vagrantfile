@@ -5,8 +5,8 @@ if ENV.has_key?('EEN_SHARED_FOLDER_HOST') === false
   exit
 end
 
-if ENV.has_key?('EEN_ELASTICSEARCH_SHARED_FOLDER_HOST') === false
-  puts "Please define EEN_ELASTICSEARCH_SHARED_FOLDER_HOST in your Environment"
+if ENV.has_key?('EEN_SERVICE_SHARED_FOLDER_HOST') === false
+  puts "Please define EEN_SERVICE_SHARED_FOLDER_HOST in your Environment"
   exit
 end
 
@@ -22,8 +22,8 @@ EEN_CPUS = 2
 EEN_SHARED_FOLDER_GUEST = '/var/www/een'
 EEN_SHARED_FOLDER_HOST = ENV['EEN_SHARED_FOLDER_HOST']
 
-EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST = '/var/www/een-elasticsearch'
-EEN_ELASTICSEARCH_SHARED_FOLDER_HOST = ENV['EEN_ELASTICSEARCH_SHARED_FOLDER_HOST']
+EEN_SERVICE_SHARED_FOLDER_GUEST = '/var/www/een-service'
+EEN_SERVICE_SHARED_FOLDER_HOST = ENV['EEN_SERVICE_SHARED_FOLDER_HOST']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "lamp", primary: true do |lamp|
@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :id => 'drupal',
         :nfs => true
 
-      lamp.vm.synced_folder EEN_ELASTICSEARCH_SHARED_FOLDER_HOST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
+      lamp.vm.synced_folder EEN_SERVICE_SHARED_FOLDER_HOST, EEN_SERVICE_SHARED_FOLDER_GUEST,
         :id => 'api',
         :nfs => true
 
@@ -51,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           perms: 'u=rwx:g=rwx:o=rwx',
           owner: 'vagrant',
           group: 'vagrant'
-        config.bindfs.bind_folder EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST, EEN_ELASTICSEARCH_SHARED_FOLDER_GUEST,
+        config.bindfs.bind_folder EEN_SERVICE_SHARED_FOLDER_GUEST, EEN_SERVICE_SHARED_FOLDER_GUEST,
           perms: 'u=rwx:g=rwx:o=rwx',
           owner: 'vagrant',
           group: 'vagrant'
@@ -92,7 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 *                                                                                         *
 * Host Access:                                                                            *
 *   Please add this line to your hosts to access http://enn/                              *
-*   192.168.10.10 een een-elasticsearch vagrant.een.co.uk vagrant.een-elasticsearch.co.uk *
+*   192.168.10.10 een een-service vagrant.een.co.uk vagrant.een-service.co.uk             *
 *******************************************************************************************
 EOF
   end
