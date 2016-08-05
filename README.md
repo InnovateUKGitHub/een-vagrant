@@ -42,7 +42,7 @@ The box should be provide with:
 
 Once the box booted, modify your hosts by adding this line:
 ```
-192.168.10.10   een een-service vagrant.een.co.uk vagrant.een-service.co.uk
+192.168.10.10   vagrant.een.co.uk vagrant.een-service.co.uk
 ```
 
 Last part is to install the current version of your project in the box, for that follow those steps:
