@@ -1,7 +1,7 @@
 # Test if the require variables are present
 
-if ENV.has_key?('EEN_SHARED_FOLDER_HOST') === false
-  puts "Please define EEN_SHARED_FOLDER_HOST in your Environment"
+if ENV.has_key?('EEN_WEB_APP_SHARED_FOLDER_HOST') === false
+  puts "Please define EEN_WEB_APP_SHARED_FOLDER_HOST in your Environment"
   exit
 end
 
@@ -19,8 +19,8 @@ EEN_IP_ADDRESS_HOST = '192.168.10.10'
 EEN_RAM = '2048'
 EEN_CPUS = 2
 
-EEN_SHARED_FOLDER_GUEST = '/var/www/een'
-EEN_SHARED_FOLDER_HOST = ENV['EEN_SHARED_FOLDER_HOST']
+EEN_WEB_APP_SHARED_FOLDER_GUEST = '/var/www/een'
+EEN_WEB_APP_SHARED_FOLDER_HOST = ENV['EEN_WEB_APP_SHARED_FOLDER_HOST']
 
 EEN_SERVICE_SHARED_FOLDER_GUEST = '/var/www/een-service'
 EEN_SERVICE_SHARED_FOLDER_HOST = ENV['EEN_SERVICE_SHARED_FOLDER_HOST']
@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # static ip for local development
       lamp.vm.network "private_network", ip: EEN_IP_ADDRESS_HOST
 
-      lamp.vm.synced_folder EEN_SHARED_FOLDER_HOST, EEN_SHARED_FOLDER_GUEST,
+      lamp.vm.synced_folder EEN_WEB_APP_SHARED_FOLDER_HOST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
         :id => 'drupal',
         :nfs => true
 
@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # Bindfs support to fix shared folder (NFS) permission issue on Mac
       if Vagrant.has_plugin?("vagrant-bindfs")
-        config.bindfs.bind_folder EEN_SHARED_FOLDER_GUEST, EEN_SHARED_FOLDER_GUEST,
+        config.bindfs.bind_folder EEN_WEB_APP_SHARED_FOLDER_GUEST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
           perms: 'u=rwx:g=rwx:o=rwx',
           owner: 'vagrant',
           group: 'vagrant'
@@ -92,7 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 *                                                                                         *
 * Host Access:                                                                            *
 *   Please add this line to your hosts to access http://enn/                              *
-*   192.168.10.10 een een-service vagrant.een.co.uk vagrant.een-service.co.uk             *
+*   192.168.10.10 vagrant.een.co.uk vagrant.een-service.co.uk                             *
 *******************************************************************************************
 EOF
   end

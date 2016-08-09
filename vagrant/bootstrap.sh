@@ -35,49 +35,44 @@ sudo apt-get -y -q install mysql-server-5.6 > /dev/null 2>&1 && \
 sudo apt-get -qq install openjdk-7-jre -y > /dev/null 2>&1 && \
   echo "4 - Java 7 Installed"
 
-# Install Sendmail
-sudo apt-get -y install sendmail > /dev/null 2>&1;
+# Install SendMail
+sudo apt-get -y install sendmail > /dev/null 2>&1 && \
+  echo "5 - SendMail Installed"
 
 # Install Git
-sudo apt-get -y install git > /dev/null 2>&1;
+sudo apt-get -y install git > /dev/null 2>&1 && \
+  echo "6 - Git Installed"
 
 # Install Unzip
-sudo apt-get install unzip -y > /dev/null 2>&1
-
-# Install Ant
-sudo apt-get install ant -y > /dev/null 2>&1
+sudo apt-get install unzip -y > /dev/null 2>&1 && \
+  echo "7 - Unzip Installed"
 
 # Install Elastic Search
 cd /tmp
 wget --quiet https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.1/elasticsearch-2.3.1.deb > /dev/null 2>&1
 sudo dpkg -i elasticsearch-2.3.1.deb > /dev/null 2>&1 && \
 sudo rm elasticsearch-2.3.1.deb && \
-  echo "5 - Elasticsearch 2.3 Installed"
+  echo "8 - Elasticsearch 2.3 Installed"
 
 sudo cp /vagrant/vagrant/files/elasticsearch.yml /etc/elasticsearch/ && \
-  echo "6 - Elasticsearch Configuration Copied "
+  echo "9 - Elasticsearch Configuration Copied "
 sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head > /dev/null 2>&1 && \
-  echo "7 - ES head plugin installed: http://een:9200/_plugin/head/"
+  echo "10- ES head plugin installed: http://vagrant.een.co.uk:9200/_plugin/head/"
 # Add it as a service
 sudo update-rc.d elasticsearch defaults 95 10 > /dev/null 2>&1
 sudo /etc/init.d/elasticsearch start > /dev/null 2>&1
 
 # /etc/hosts for VirtualHosts
 cp /vagrant/vagrant/files/lamp.hosts /etc/hosts && \
-  echo "8 - Hosts File Copied"
+  echo "11- Hosts File Copied"
 
 # PHP.ini
 cp /vagrant/vagrant/files/php.ini /etc/php/5.6/cli/php.ini && \
-  echo "9 - php.ini Copied"
+  echo "12- php.ini Copied"
 
 # my.cnf
 cp /vagrant/vagrant/files/my.cnf /etc/mysql/my.cnf && \
-  echo "10- my.cnf Copied"
-
-# VirtualHost apache files
-# cp /vagrant/vagrant/files/een.conf /etc/apache2/sites-available/ && \
-# cp /vagrant/vagrant/files/een-service.conf /etc/apache2/sites-available/ && \
-#   echo "11- Apache Configs Copied"
+  echo "13- my.cnf Copied"
 
 # Create folder and symlinks for virtualhost
 sudo mkdir /home/web
@@ -85,15 +80,9 @@ sudo chown vagrant:vagrant /home/web
 ln -s /var/www/een /home/web
 ln -s /var/www/een-service /home/web
 
-# Create cache dir for app
-#mkdir -p /var/lib/een/cache
-#mkdir -p /var/lib/een-service/cache
-
 # Disable default vhost
- sudo a2dissite 000-default > /dev/null 2>&1
- sudo a2dissite default-ssl > /dev/null 2>&1
-# sudo a2ensite een > /dev/null 2>&1
-# sudo a2ensite een-service > /dev/null 2>&1
+sudo a2dissite 000-default > /dev/null 2>&1
+sudo a2dissite default-ssl > /dev/null 2>&1
 sudo a2enmod rewrite > /dev/null 2>&1
 
 # Add ServerName to apache conf
@@ -102,7 +91,7 @@ sudo a2enconf fqdn > /dev/null 2>&1
 
 # Restart Apache
 service apache2 restart > /dev/null 2>&1 && \
-  echo "12- Apache Configured"
+  echo "14- Apache Configured"
 
 # Copy bash_profile
 cp /vagrant/vagrant/files/bash_profile /home/vagrant/.bash_profile && chown vagrant:vagrant /home/vagrant/.bash_profile && \
@@ -110,14 +99,14 @@ echo "
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi" >> /home/vagrant/.bashrc && \
-  echo "13- .bash_profile vagrant Copied"
+  echo "15- .bash_profile vagrant Copied"
 
 sudo cp /vagrant/vagrant/files/bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile && \
 sudo echo "
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi" >> /root/.bashrc && \
-  echo "13- .bash_profile root Copied"
+  echo "16- .bash_profile root Copied"
 
 # Install Composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" > /dev/null 2>&1 && \
@@ -125,16 +114,16 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d85314
 php composer-setup.php > /dev/null 2>&1 && \
 php -r "unlink('composer-setup.php');" > /dev/null 2>&1 && \
 sudo mv composer.phar /usr/bin/composer && \
-  echo "14- Composer Installed"
+  echo "17- Composer Installed"
 
 # Nodejs, npm and grunt and all required binaries to use grunt and sass
 sudo apt-get -qq install nodejs -y > /dev/null 2>&1 && \
-  echo "15- Node Installed"
+  echo "18- Node Installed"
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo apt-get -qq install npm -y > /dev/null 2>&1 && \
-  echo "16- Npm Installed"
+  echo "19- Npm Installed"
 sudo npm install -g --silent gulp-cli > /dev/null 2>&1 && \
-  echo "17- Gulp Cli Installed"
+  echo "20- Gulp Cli Installed"
 sudo apt-get -qq install ruby-sass -y > /dev/null 2>&1 && \
-  echo "18- Sass Installed"
+  echo "21- Sass Installed"
 echo "Bootstrap complete!"
