@@ -36,6 +36,8 @@ http.port: 9200
 # Require explicit names when deleting indices:
 #
 # action.destructive_requires_name: true
+index.number_of_shards: 5
+index.number_of_replicas: 1
 
 # References guide
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html>
