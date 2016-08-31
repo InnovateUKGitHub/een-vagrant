@@ -35,11 +35,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       lamp.vm.synced_folder EEN_WEB_APP_SHARED_FOLDER_HOST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
         :id => 'drupal',
-        :nfs => true
+        :nfs => true,
+        :mount_options => ['actimeo=2']
 
       lamp.vm.synced_folder EEN_SERVICE_SHARED_FOLDER_HOST, EEN_SERVICE_SHARED_FOLDER_GUEST,
         :id => 'api',
-        :nfs => true
+        :nfs => true,
+        :mount_options => ['actimeo=2']
 
       # This uses uid and gid of the user that started vagrant.
       config.nfs.map_uid = Process.uid
