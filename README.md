@@ -11,10 +11,9 @@ git checkout develop
 Then log into your vagrant box `vagrant ssh` and run `make install` where the project is.
 
 
-First you need to import to your environment the location of your een project
+First you need to import to your environment the location of your een projects (All the projects must be presents inside the same folder)
 ```
-export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_DRUPAL_PROJECT
-export EEN_SERVICE_SHARED_FOLDER_HOST=PATH_TO_YOUR_SERVICE []() _PROJECT
+export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_ROOT_PROJECTS
 ```
 
 If you are on a mac you need to install a vagrant plugin to fix nfs permissions
