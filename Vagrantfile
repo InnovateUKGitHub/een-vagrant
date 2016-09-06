@@ -1,12 +1,6 @@
 # Test if the require variables are present
-
-if ENV.has_key?('EEN_WEB_APP_SHARED_FOLDER_HOST') === false
-  puts "Please define EEN_WEB_APP_SHARED_FOLDER_HOST in your Environment"
-  exit
-end
-
-if ENV.has_key?('EEN_SERVICE_SHARED_FOLDER_HOST') === false
-  puts "Please define EEN_SERVICE_SHARED_FOLDER_HOST in your Environment"
+if ENV.has_key?('EEN_SHARED_FOLDER_HOST') === false
+  puts "Please define EEN_SHARED_FOLDER_HOST in your Environment"
   exit
 end
 
@@ -19,11 +13,8 @@ EEN_IP_ADDRESS_HOST = '192.168.10.10'
 EEN_RAM = '2048'
 EEN_CPUS = 2
 
-EEN_WEB_APP_SHARED_FOLDER_GUEST = '/var/www/een'
-EEN_WEB_APP_SHARED_FOLDER_HOST = ENV['EEN_WEB_APP_SHARED_FOLDER_HOST']
-
-EEN_SERVICE_SHARED_FOLDER_GUEST = '/var/www/een-service'
-EEN_SERVICE_SHARED_FOLDER_HOST = ENV['EEN_SERVICE_SHARED_FOLDER_HOST']
+EEN_SHARED_FOLDER_GUEST = '/var/www'
+EEN_SHARED_FOLDER_HOST = ENV['EEN_SHARED_FOLDER_HOST']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "lamp", primary: true do |lamp|
@@ -34,13 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       lamp.vm.network "private_network", ip: EEN_IP_ADDRESS_HOST
       config.vm.network "public_network"
 
-      lamp.vm.synced_folder EEN_WEB_APP_SHARED_FOLDER_HOST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
-        :id => 'drupal',
-        :nfs => true,
-        :mount_options => ['actimeo=2']
-
-      lamp.vm.synced_folder EEN_SERVICE_SHARED_FOLDER_HOST, EEN_SERVICE_SHARED_FOLDER_GUEST,
-        :id => 'api',
+      lamp.vm.synced_folder EEN_SHARED_FOLDER_HOST, EEN_SHARED_FOLDER_GUEST,
+        :id => 'een',
         :nfs => true,
         :mount_options => ['actimeo=2']
 
@@ -50,11 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # Bindfs support to fix shared folder (NFS) permission issue on Mac
       if Vagrant.has_plugin?("vagrant-bindfs")
-        config.bindfs.bind_folder EEN_WEB_APP_SHARED_FOLDER_GUEST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
-          perms: 'u=rwx:g=rwx:o=rwx',
-          owner: 'vagrant',
-          group: 'vagrant'
-        config.bindfs.bind_folder EEN_SERVICE_SHARED_FOLDER_GUEST, EEN_SERVICE_SHARED_FOLDER_GUEST,
+        config.bindfs.bind_folder EEN_SHARED_FOLDER_GUEST, EEN_SHARED_FOLDER_GUEST,
           perms: 'u=rwx:g=rwx:o=rwx',
           owner: 'vagrant',
           group: 'vagrant'
@@ -88,7 +70,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 *   MySQL root password - "password"                                                      *
 *                                                                                         *
 * Misc:                                                                                   *
-*   http://een:9200/_plugin/head/ - Elasticsearch head                                    *
+*   http://vagrant.een.co.uk:9200/_plugin/head/ - Elasticsearch head                      *
 *                                                                                         *
 * SSH:                                                                                    *
 *   vagrant ssh or vagrant ssh lamp                                                       *
