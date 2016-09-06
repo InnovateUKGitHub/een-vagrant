@@ -8,8 +8,13 @@ git checkout master
 git checkout develop
 ```
 
-Then log into your vagrant box `vagrant ssh` and run `make install` where the project is.
+Then log into your vagrant box `vagrant ssh` and run `make install` where the projects are.
 
+Here are the path of the projects you should have:
+- webapp(drupal): /var/www/een
+- service(zf3): /var/www/een-service
+
+Those 2 folder have to be name "een" and "een-service" as the deployment scripts look for those name.
 
 First you need to import to your environment the location of your een projects (All the projects must be presents inside the same folder)
 ```
