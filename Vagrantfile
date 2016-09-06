@@ -32,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # static ip for local development
       lamp.vm.network "private_network", ip: EEN_IP_ADDRESS_HOST
+      config.vm.network "public_network"
 
       lamp.vm.synced_folder EEN_WEB_APP_SHARED_FOLDER_HOST, EEN_WEB_APP_SHARED_FOLDER_GUEST,
         :id => 'drupal',
