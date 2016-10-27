@@ -1,14 +1,44 @@
+# Enterprise Europe Network (Alpha Version)
 
-#Deploy instance of vagrant locally
+## Vagrant Project
 
-#Install Vagrant project locally
+This project has for goal to deploy on the developer machine a fully functional virtual machine
+
+Requirements
+------------
+
+In order to use the virtual machine a few software are necessary:
+
+
+- [Virtual box][1]
+- [Vagrant][2]
+
+If you are on a mac you need to install a vagrant plugin to fix nfs permissions
 ```
-git clone https://YOUR_USERNAME@devops.innovateuk.org/code-repository/scm/een/een-vagrant.git
+vagrant plugin install vagrant-bindfs
+```
+
+Installation
+------------
+
+On a terminal, move where you want to install the project and run:
+```
+git clone https://devops.innovateuk.org/code-repository/scm/een/een-vagrant.git
 git checkout master
 git checkout develop
 ```
 
-Then log into your vagrant box `vagrant ssh` and run `make install` where the projects are.
+Then run `vagrant up`. This command will download and install your virtual machine.
+If it prompt you that you have not defined EEN_SHARED_FOLDER_HOST, please run the following command replacing the path:
+```
+export EEN_SHARED_FOLDER_HOST=PATH_TO_THE_ROOT_OF_YOUR_PROJECTS
+```
+It is best to add it globaly to your environment by adding the previous line to your .bashrc or .bash_profile
+use `source ~/.bachrc` to reload your file to your current bash session
+
+At this point you have time to get a nice coffee or tea as it can take up to 5 minutes.
+
+Once the installation is complete you can log in to your virtual box using `vagrant ssh`
 
 Here are the path of the projects you should have:
 - webapp(drupal): /var/www/een
@@ -16,22 +46,6 @@ Here are the path of the projects you should have:
 
 Those 2 folder have to be name "een" and "een-service" as the deployment scripts look for those name.
 
-First you need to import to your environment the location of your een projects (All the projects must be presents inside the same folder)
-```
-export EEN_SHARED_FOLDER_HOST=PATH_TO_YOUR_ROOT_PROJECTS
-```
-
-If you are on a mac you need to install a vagrant plugin to fix nfs permissions
-```
-vagrant plugin install vagrant-bindfs
-```
-
-It is best to add it globaly to your environment by adding the previous line to your .bashrc or .bash_profile
-use `source ~/.bachrc` to reload your file to your current bash session
-
-Once your environment correct (you can verify by using echo $shared_folder), you can up the box with `vagrant up`
-
-This will provision the box with all the necessary installation.
 The box should be provide with:
 - shared folder (nfs)
 - apache 2.4.7
@@ -60,3 +74,22 @@ make install
 
 Once the installation is complete you can go to this address on your navigator:
 http://vagrant.een.co.uk/
+
+Links
+-----
+
+[Website][3] |
+[Drupal Project][4] | 
+[Service Project][5] | 
+[Integration Project][6] | 
+[Jira][7] | 
+[Jenkins][8]
+
+[1]: https://www.virtualbox.org/wiki/Downloads
+[2]: https://www.vagrantup.com/downloads.html
+[3]: https://een.int.aerian.com
+[4]: https://devops.innovateuk.org/code-repository/projects/EEN/repos/een-webapp/browse?at=refs%2Fheads%2Fdevelop
+[5]: https://devops.innovateuk.org/code-repository/projects/EEN/repos/een-service/browse?at=refs%2Fheads%2Fdevelop
+[6]: https://devops.innovateuk.org/code-repository/projects/EEN/repos/een-integration-tests/browse?at=refs%2Fheads%2Fdevelop
+[7]: https://devops.innovateuk.org/issue-tracking/secure/Dashboard.jspa
+[8]: https://jenkins.aerian.com/view/een/
