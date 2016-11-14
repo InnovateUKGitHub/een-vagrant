@@ -61,6 +61,10 @@ sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head > /dev/
 # Add it as a service
 sudo update-rc.d elasticsearch defaults 95 10 > /dev/null 2>&1
 sudo /etc/init.d/elasticsearch start > /dev/null 2>&1
+#systemd U16.04
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo /bin/systemctl start elasticsearch.service
 
 # /etc/hosts for VirtualHosts
 cp /vagrant/vagrant/files/lamp.hosts /etc/hosts && \
